@@ -38,7 +38,7 @@ export default function Navbar() {
 
         <div className="flex gap-4 text-sm font-medium text-gray-600 dark:text-gray-300">
           <Link to="/" className="hover:text-blue-600 dark:hover:text-blue-400">Dashboard</Link>
-          <Link to="/crud" className="hover:text-blue-600 dark:hover:text-blue-400">Manage Data</Link>
+          <Link to="/crud" className="hover:text-blue-600 dark:hover:text-blue-400">CRUD Data</Link>
         </div>
       </div>
 
@@ -49,8 +49,8 @@ export default function Navbar() {
               key={t}
               onClick={() => changeTheme(t as any)}
               className={`px-3 py-1 text-xs capitalize rounded-md transition ${theme === t
-                  ? 'bg-white dark:bg-gray-600 shadow-sm text-blue-600 dark:text-blue-400'
-                  : 'text-gray-500 dark:text-gray-400'
+                ? 'bg-white dark:bg-gray-600 shadow-sm text-blue-600 dark:text-blue-400'
+                : 'text-gray-500 dark:text-gray-400'
                 }`}
             >
               {t}
@@ -69,9 +69,18 @@ export default function Navbar() {
 
           {open && (
             <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-xl py-1 z-50">
-              <div className="px-4 py-2 border-b dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400">
+              <div className="px-4 py-2 border-b dark:border-gray-700 text-xs text-gray-500 dark:text-white">
                 {user?.username}
               </div>
+              <button
+                onClick={() => {
+                  navigate('/profile')
+                  setOpen(false)
+                }}
+                className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white"
+              >
+                Edit Profile
+              </button>
               <button
                 onClick={handleLogout}
                 className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"

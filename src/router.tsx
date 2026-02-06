@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAuthContext } from './context/AuthContext'
 import CrudPage from './pages/CrudPage'
+import Profile from './pages/Profile'
 
 function LoginWrapper() {
   const { isAuthenticated } = useAuthContext()
@@ -31,6 +32,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <CrudPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/profile',
+    element: (
+      <ProtectedRoute>
+        <Profile />
       </ProtectedRoute>
     ),
   },
