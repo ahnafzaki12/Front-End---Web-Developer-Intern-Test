@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getStorage, setStorage, removeStorage } from '../utils/storage'
-
-type User = {
-  username: string
-  fullName: string
-}
+import type { User } from '../types/user'
 
 const AUTH_KEY = 'auth'
 
@@ -15,7 +11,10 @@ const STATIC_CREDENTIAL = {
 }
 
 export function useAuth() {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<User | null>(() => {
+    const saved = getStorage<{ user: User }>(AUTH_KEY)
+    return saved?.user || null
+  })
 
   useEffect(() => {
     const saved = getStorage<{ user: User }>(AUTH_KEY)
