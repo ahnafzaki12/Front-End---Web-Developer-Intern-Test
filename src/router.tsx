@@ -2,7 +2,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import ProtectedRoute from './components/ProtectedRoute'
-import { useAuthContext } from './hooks/AuthContext'
+import { useAuthContext } from './context/AuthContext'
 import CrudPage from './pages/CrudPage'
 
 function LoginWrapper() {
