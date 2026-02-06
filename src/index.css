@@ -4,6 +4,6 @@
 
 @layer base {
   html {
-    @apply transition-colors duration-300;
+    @apply transition-colors duration-500;
   }
 }

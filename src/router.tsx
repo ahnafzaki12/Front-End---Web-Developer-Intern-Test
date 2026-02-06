@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import Login from './pages/Login'
-import Dashboard from './pages/Dashboard'
+import Home from './pages/Home'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAuthContext } from './context/AuthContext'
 import CrudPage from './pages/CrudPage'
@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
     path: '/',
     element: (
       <ProtectedRoute>
-        <Dashboard />
+        <Home />
       </ProtectedRoute>
     ),
   },
