@@ -79,12 +79,12 @@ export default function CrudPage() {
     )
 
     return (
-        <>
+        <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
             <Navbar />
-            <div className="p-6 max-w-3xl mx-auto">
+            <div className="p-6 max-w-3xl mx-auto dark:text-white">
                 <h1 className="text-2xl font-bold mb-4">CRUD Data</h1>
                 <input
-                    className="w-full border p-2 mb-3"
+                    className="w-full border p-2 mb-4 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                     placeholder="Cari nama atau email..."
                     value={search}
                     onChange={e => updateParams(e.target.value, 1)}
@@ -113,15 +113,15 @@ export default function CrudPage() {
                 </form>
 
                 {/* TABLE */}
-                <table className="w-full border">
-                    <thead className="bg-gray-100">
+                <table className="w-full border dark:border-gray-700">
+                    <thead className="bg-gray-100 dark:bg-gray-800">
                         <tr>
                             <th className="border p-2">Nama</th>
                             <th className="border p-2">Email</th>
                             <th className="border p-2">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="dark:bg-gray-900">
                         {paginatedItems.map(item => (
                             <tr key={item.id}>
                                 <td className="border p-2">{item.name}</td>
@@ -166,6 +166,6 @@ export default function CrudPage() {
                     ))}
                 </div>
             </div>
-        </>
+        </div>
     )
 }
