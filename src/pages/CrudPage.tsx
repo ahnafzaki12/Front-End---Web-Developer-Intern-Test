@@ -8,18 +8,24 @@ export default function CrudPage() {
     const [items, setItems] = useState<Item[]>([])
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
+    const [alert, setAlert] = useState<{ msg: string; type: 'success' | 'error' } | null>(null)
     const [editingId, setEditingId] = useState<number | null>(null)
-
     const [params, setParams] = useSearchParams()
-
     const search = params.get('search') || ''
     const page = Number(params.get('page')) || 1
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState<number | null>(null);
 
     const ITEMS_PER_PAGE = 5
 
     useEffect(() => {
         setItems(getItems())
     }, [])
+
+    const showAlert = (msg: string, type: 'success' | 'error' = 'success') => {
+        setAlert({ msg, type })
+        setTimeout(() => setAlert(null), 3000)
+    }
 
     function updateParams(newSearch: string, newPage: number) {
         setParams({
@@ -30,27 +36,25 @@ export default function CrudPage() {
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
-
-        if (editingId) {
-            const updated = items.map(item =>
-                item.id === editingId ? { ...item, name, email } : item
-            )
-            setItems(updated)
-            saveItems(updated)
-        } else {
-            const newItem: Item = {
-                id: Date.now(),
-                name,
-                email,
+        try {
+            if (editingId) {
+                const updated = items.map(item =>
+                    item.id === editingId ? { ...item, name, email } : item
+                )
+                setItems(updated)
+                saveItems(updated)
+                showAlert('Data berhasil diperbarui!')
+            } else {
+                const newItem: Item = { id: Date.now(), name, email }
+                const updated = [...items, newItem]
+                setItems(updated)
+                saveItems(updated)
+                showAlert('Data berhasil ditambahkan!')
             }
-            const updated = [...items, newItem]
-            setItems(updated)
-            saveItems(updated)
+            setName(''); setEmail(''); setEditingId(null)
+        } catch (err) {
+            showAlert('Terjadi kesalahan sistem!', 'error')
         }
-
-        setName('')
-        setEmail('')
-        setEditingId(null)
     }
 
     function handleEdit(item: Item) {
@@ -59,10 +63,21 @@ export default function CrudPage() {
         setEmail(item.email)
     }
 
-    function handleDelete(id: number) {
-        const updated = items.filter(item => item.id !== id)
-        setItems(updated)
-        saveItems(updated)
+    function confirmDelete(id: number) {
+        setItemToDelete(id);
+        setIsDeleteModalOpen(true);
+    }
+
+    function executeDelete() {
+        if (itemToDelete !== null) {
+            const updated = items.filter(item => item.id !== itemToDelete);
+            setItems(updated);
+            saveItems(updated);
+
+            setIsDeleteModalOpen(false);
+            setItemToDelete(null);
+            showAlert('Data telah berhasil dihapus!', 'success');
+        }
     }
 
     const filteredItems = items.filter(item =>
@@ -72,7 +87,6 @@ export default function CrudPage() {
 
     const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE)
 
-
     const paginatedItems = filteredItems.slice(
         (page - 1) * ITEMS_PER_PAGE,
         page * ITEMS_PER_PAGE
@@ -81,7 +95,6 @@ export default function CrudPage() {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors">
             <Navbar />
-
             <div className="p-8 max-w-5xl mx-auto md:p-6 md:ml-14 md:mr-16 md:max-w-none md:mx-0">
                 <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
@@ -103,6 +116,25 @@ export default function CrudPage() {
                 {/* FORM */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-1">
+                        {alert && (
+                            <div className={`mb-6 flex items-center gap-3 p-4 rounded-xl border animate-in fade-in slide-in-from-top-2 duration-300 ${alert.type === 'success'
+                                ? 'bg-green-50 dark:bg-green-900/20 border-green-100 dark:border-green-800'
+                                : 'bg-red-50 dark:bg-red-900/20 border-red-100 dark:border-red-800'
+                                }`}>
+                                <div className={`${alert.type === 'success' ? 'bg-green-500' : 'bg-red-500'} rounded-full p-1`}>
+                                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        {alert.type === 'success' ? (
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                                        ) : (
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12" />
+                                        )}
+                                    </svg>
+                                </div>
+                                <p className={`text-sm font-medium ${alert.type === 'success' ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
+                                    {alert.msg}
+                                </p>
+                            </div>
+                        )}
                         <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 sticky top-24">
                             <h2 className="text-lg font-bold mb-4 dark:text-white flex items-center gap-2">
                                 {editingId ? 'Edit Data' : 'Tambah Data'}
@@ -143,7 +175,7 @@ export default function CrudPage() {
                             </form>
                         </div>
                     </div>
-                    
+
                     {/* TABEL */}
                     <div className="lg:col-span-2">
                         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
@@ -172,7 +204,7 @@ export default function CrudPage() {
                                                     Edit
                                                 </button>
                                                 <button
-                                                    onClick={() => handleDelete(item.id)}
+                                                    onClick={() => confirmDelete(item.id)}
                                                     className="text-red-500 hover:text-red-700 font-semibold text-sm transition-colors cursor-pointer"
                                                 >
                                                     Hapus
@@ -210,6 +242,36 @@ export default function CrudPage() {
                     </div>
                 </div>
             </div>
+
+            {/* pop confirmation */}
+            {isDeleteModalOpen && (
+                <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
+                    <div
+                        className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm animate-in fade-in duration-300"
+                        onClick={() => setIsDeleteModalOpen(false)}
+                    ></div>
+                    <div className="relative bg-white dark:bg-gray-900 w-full max-w-sm rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 p-6 animate-in zoom-in-95 duration-200">
+                        <div className="flex flex-col items-center text-center">
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Hapus Data?</h3>
+                            <p className="text-gray-500 dark:text-gray-400 mb-6">Tindakan ini tidak dapat dibatalkan. Apakah Anda yakin ingin menghapus data ini?</p>
+                            <div className="flex gap-3 w-full">
+                                <button
+                                    onClick={() => setIsDeleteModalOpen(false)}
+                                    className="flex-1 px-4 py-2.5 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-all cursor-pointer"
+                                >
+                                    Batal
+                                </button>
+                                <button
+                                    onClick={executeDelete}
+                                    className="flex-1 px-4 py-2.5 bg-red-500 text-white font-semibold rounded-xl hover:bg-red-600 transition-all cursor-pointer"
+                                >
+                                    Ya, Hapus
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
