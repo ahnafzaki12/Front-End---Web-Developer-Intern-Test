@@ -82,7 +82,7 @@ export default function CrudPage() {
         <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors">
             <Navbar />
 
-            <div className="p-8 max-w-5xl mx-auto md:p-6 md:ml-14 md:max-w-none md:mx-0">
+            <div className="p-8 max-w-5xl mx-auto md:p-6 md:ml-14 md:mr-16 md:max-w-none md:mx-0">
                 <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
