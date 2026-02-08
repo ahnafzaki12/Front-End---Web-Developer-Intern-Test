@@ -6,8 +6,8 @@ const AUTH_KEY = 'auth'
 
 const STATIC_CREDENTIAL = {
   username: 'admin',
-  password: 'admin123',
-  fullName: 'Administrator',
+  password: 'admin',
+  fullName: 'Admin Aksamedia',
 }
 
 export function useAuth() {

@@ -144,7 +144,7 @@ export default function Navbar() {
             Data
           </Link>
           <div className="xs:hidden pt-4 flex gap-2">
-             {['light', 'dark', 'system'].map((t) => (
+             {['tersng', 'gelap', 'sistem'].map((t) => (
                 <button 
                   key={t}
                   onClick={() => changeTheme(t as any)}
