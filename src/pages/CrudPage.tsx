@@ -99,7 +99,7 @@ export default function CrudPage() {
                 <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
-                            Management Data
+                            Manajemen Data
                         </h1>
                     </div>
 
