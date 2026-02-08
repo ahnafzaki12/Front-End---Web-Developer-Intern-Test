@@ -62,7 +62,7 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-2 md:gap-6">
-          <div className="hidden xs:flex bg-gray-100 dark:bg-gray-800 p-1 rounded-full border border-gray-200 dark:border-gray-700">
+          <div className="hidden sm:flex bg-gray-100 dark:bg-gray-800 p-1 rounded-full border border-gray-200 dark:border-gray-700">
             {['light', 'dark', 'system'].map((t) => (
               <button
                 key={t}
