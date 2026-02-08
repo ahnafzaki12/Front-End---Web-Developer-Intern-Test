@@ -5,7 +5,7 @@ const THEME_KEY = 'theme'
 
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(() => {
-    return (localStorage.getItem(THEME_KEY) as Theme) || 'system'
+    return (localStorage.getItem(THEME_KEY) as Theme) || 'sistem'
   })
 
   useEffect(() => {
