@@ -1,73 +1,98 @@
-# React + TypeScript + Vite
+# Frontend Technical Test – Local Version  
+Fullstack Developer Intern Test  
+PT Aksamedia Mulia Digital  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 👨‍💻 Author
+Muhammad Ahnaf Zaki  
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧩 Tech Stack
 
-## React Compiler
+- React (Vite)
+- React Router
+- Context API
+- Tailwind CSS
+- Local Storage (No API)
+- Vercel (Deployment)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🎯 Overview
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Project ini merupakan implementasi Tugas 1 (Frontend Only) sesuai requirement:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Authentication tanpa API
+- CRUD tanpa API (Local Storage)
+- Search & Pagination manual
+- Query string state persistence
+- Dark / Light / System mode
+- Protected routes
+- Responsive design
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Seluruh UI dibangun menggunakan Tailwind CSS tanpa UI library tambahan.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🔐 Login Credential
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Username: admin  
+Password: admin  
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## ✨ Features Implemented
+
+### 🔐 Authentication (Local)
+- Login tanpa API
+- Persist login saat refresh
+- Logout via custom dropdown
+- Protected route
+
+### 📊 CRUD (Local Storage)
+- Create
+- Read
+- Update
+- Delete
+- Search / Filter
+- Pagination manual
+- State bertahan via query string
+
+### 🎨 UI/UX
+- Fully responsive (Desktop / Tablet / Mobile)
+- Custom dropdown (tanpa library)
+- Dark / Light / System mode
+- Auto follow OS preference
+
+### 👤 Profile Edit
+- Edit nama user
+- Navbar auto update
+- Persist after refresh
+
+---
+
+## 🛠 Installation
+
+```bash
+npm install
+npm run dev
+🚀 Live Demo
+https://front-end-test-local.vercel.app/
+
+🧠 Architecture
+src/
+├── components
+├── pages
+├── context
+├── services
+├── hooks
+├── layouts
+└── router
+State management menggunakan Context API untuk menjaga clean architecture dan mempermudah integrasi API di tahap berikutnya.
+
+📌 Notes
+Tidak menggunakan UI library (Material UI, Chakra, dll)
+
+Seluruh pagination & dropdown dibuat manual
+
+Data disimpan menggunakan Local Storage
